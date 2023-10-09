@@ -62,20 +62,31 @@ public class Main {
         for (int j = low; j < high; j++) {
             if (arr[j] < pivot) {
                 i++;
-                // Swap arr[i] and arr[j]
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+                swap(arr, i, j);
+//                // Swap arr[i] and arr[j]
+//                int temp = arr[i];
+//                arr[i] = arr[j];
+//                arr[j] = temp;
             }
         }
 
-        // Swap the pivot element with arr[i+1] to place it in the correct position
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
+
+        swap(arr, i + 1, high);
+//
+//        // Swap the pivot element with arr[i+1] to place it in the correct position
+//        int temp = arr[i + 1];
+//        arr[i + 1] = arr[high];
+//        arr[high] = temp;
 
         // Return the index of the pivot element
         return i + 1;
+    }
+
+    public static void swap(int[] ar, int i, int j) {
+        // Swap arr[i] and arr[j]
+        int temp = ar[i];
+        ar[i] = ar[j];
+        ar[j] = temp;
     }
 
 
