@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Random;
+
 /**
  * This is a Java program that demonstrates the Quick Sort algorithm for sorting an array of integers.
  * Quick Sort is a fast and efficient sorting algorithm that works by selecting a 'pivot' element from the array
@@ -16,15 +18,38 @@ public class Main {
     public static void main(String[] args) {
 
         // Create an integer array to be sorted
-        int[] ar = {5, 2, 1, 3, 4};
+//        int[] ar = generateRandomArray(15);
+
+        int[] arr = { 10, 7, 8, 9, 1, 5, 3, 2, 4, 6, 11, 13, 17, 15, 12, 14, 16, 18, 19, 20, 23, 21, 22, 25, 24 };
 
         // Call the quicksort method to sort the array
-        quicksort(ar, 0, ar.length - 1);
+        quicksort(arr, 0, arr.length - 1);
 
         // Print the sorted array
-        for (int j : ar) {
+        for (int j : arr) {
             System.out.print(" " + j);
         }
+    }
+
+    /**
+     * Generates an array of random integers.
+     *
+     */
+    public static int[] generateRandomArray(int size) {
+        // Create an array to hold the random integers
+        int[] randomArray = new int[size];
+
+        // Create a Random object to generate random numbers
+        Random rand = new Random();
+
+        // Loop through the array to populate it with random integers
+        for (int i = 0; i < size; i++) {
+            // Generate a random integer between 0 and 99 (inclusive) and store it in the array
+            randomArray[i] = rand.nextInt(100); // Adjust the range as needed
+        }
+
+        // Return the generated array
+        return randomArray;
     }
 
     /**
@@ -63,6 +88,7 @@ public class Main {
             if (arr[j] < pivot) {
                 i++;
                 swap(arr, i, j);
+
 //                // Swap arr[i] and arr[j]
 //                int temp = arr[i];
 //                arr[i] = arr[j];
@@ -70,9 +96,8 @@ public class Main {
             }
         }
 
-
         swap(arr, i + 1, high);
-//
+
 //        // Swap the pivot element with arr[i+1] to place it in the correct position
 //        int temp = arr[i + 1];
 //        arr[i + 1] = arr[high];
@@ -82,25 +107,22 @@ public class Main {
         return i + 1;
     }
 
-    public static void swap(int[] ar, int i, int j) {
-        // Swap arr[i] and arr[j]
-        int temp = ar[i];
-        ar[i] = ar[j];
-        ar[j] = temp;
+    /**
+     * Swaps two elements in an integer array.
+     *
+     * @param arr The integer array in which elements will be swapped.
+     * @param i   The index of the first element to be swapped.
+     * @param j   The index of the second element to be swapped.
+     */
+    public static void swap(int[] arr, int i, int j) {
+        // Store the value of ar[i] in a temporary variable 'temp'
+        int temp = arr[i];
+
+        // Assign the value of ar[j] to ar[i]
+        arr[i] = arr[j];
+
+        // Assign the value stored in 'temp' (which was ar[i] before the swap) to ar[j]
+        arr[j] = temp;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
