@@ -18,22 +18,30 @@ public class Main {
     public static void main(String[] args) {
 
         // Create an integer array to be sorted
-//        int[] ar = generateRandomArray(15);
+        int[] ar = generateRandomArray(15);
 
-        int[] arr = { 10, 7, 8, 9, 1, 5, 3, 2, 4, 6, 11, 13, 17, 15, 12, 14, 16, 18, 19, 20, 23, 21, 22, 25, 24 };
+        System.out.println("Original array:");
+
+        // Print the contents of the array
+        showArray(ar);
+
 
         // Call the quicksort method to sort the array
-        quicksort(arr, 0, arr.length - 1);
+        quicksort(ar, 0, ar.length - 1);
 
+        System.out.println("\nSorted array:");
         // Print the sorted array
-        for (int j : arr) {
-            System.out.print(" " + j);
-        }
+        showArray(ar);
+
+        // Call the quicksort method to sort the array
+
+
     }
 
     /**
-     * Generates an array of random integers.
-     *
+     * @param size The size of the array to be generated.
+     *             <p>
+     *             Generates an array of random integers.
      */
     public static int[] generateRandomArray(int size) {
         // Create an array to hold the random integers
@@ -55,18 +63,18 @@ public class Main {
     /**
      * The quicksort method sorts an array of integers using the Quick Sort algorithm.
      *
-     * @param arr  The array to be sorted.
+     * @param a    The array to be sorted.
      * @param low  The index of the low boundary of the current partition.
      * @param high The index of the high boundary of the current partition.
      */
-    public static void quicksort(int[] arr, int low, int high) {
+    public static void quicksort(int[] a, int low, int high) {
         if (low < high) {
             // Partition the array into two sub-arrays
-            int part = partition(arr, low, high);
+            int part = partition(a, low, high);
 
             // Recursively sort the sub-arrays
-            quicksort(arr, low, part - 1);
-            quicksort(arr, part + 1, high);
+            quicksort(a, low, part - 1);
+            quicksort(a, part + 1, high);
         }
     }
 
@@ -74,55 +82,99 @@ public class Main {
      * The partition method partitions an array into two sub-arrays
      * and returns the index of the pivot element.
      *
-     * @param arr  The array to be partitioned.
+     * @param a    The array to be partitioned.
      * @param low  The index of the low boundary of the current partition.
      * @param high The index of the high boundary of the current partition.
      * @return The index of the pivot element.
      */
-    public static int partition(int[] arr, int low, int high) {
-        int pivot = arr[high]; // Choose the last element as the pivot
-        int i = low - 1;
+//    public static int partition(int[] a, int low, int high) {   // pivot as high
+//        int pivot = a[high]; // Choose the last element as the pivot
+//        int i = low - 1;
+//
+//        // Iterate through the array and move elements less than the pivot to the left
+//        for (int j = low; j < high; j++) {
+//            if (a[j] < pivot) {
+//                i++;
+//                swap(a, i, j);
+//            }
+//        }
+//
+//        swap(a, i + 1, high);
+//
+//        // Return the index of the pivot element
+//        return i + 1;
+//    }
+    public static int partition(int[] a, int low, int high) {   //pivot as low
+        int pivot = a[low]; // Choose the first element as the pivot
+        int i = low + 1;
 
         // Iterate through the array and move elements less than the pivot to the left
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
+        for (int j = low + 1; j <= high; j++) {
+            if (a[j] < pivot) {
+                swap(a, i, j);
                 i++;
-                swap(arr, i, j);
-
-//                // Swap arr[i] and arr[j]
-//                int temp = arr[i];
-//                arr[i] = arr[j];
-//                arr[j] = temp;
             }
         }
 
-        swap(arr, i + 1, high);
-
-//        // Swap the pivot element with arr[i+1] to place it in the correct position
-//        int temp = arr[i + 1];
-//        arr[i + 1] = arr[high];
-//        arr[high] = temp;
+        swap(a, low, i - 1);
 
         // Return the index of the pivot element
-        return i + 1;
+        return i - 1;
     }
+
 
     /**
      * Swaps two elements in an integer array.
      *
-     * @param arr The integer array in which elements will be swapped.
-     * @param i   The index of the first element to be swapped.
-     * @param j   The index of the second element to be swapped.
+     * @param a      The integer array in which elements will be swapped.
+     * @param index1 The index of the first element to be swapped.
+     * @param index2 The index of the second element to be swapped.
      */
-    public static void swap(int[] arr, int i, int j) {
+    public static void swap(int[] a, int index1, int index2) {
         // Store the value of ar[i] in a temporary variable 'temp'
-        int temp = arr[i];
+        int temp = a[index1];
 
         // Assign the value of ar[j] to ar[i]
-        arr[i] = arr[j];
+        a[index1] = a[index2];
 
         // Assign the value stored in 'temp' (which was ar[i] before the swap) to ar[j]
-        arr[j] = temp;
+        a[index2] = temp;
     }
 
+    /**
+     * Prints the contents of an integer array.
+     */
+    public static void showArray(int[] a) {
+        for (int j : a) {
+            System.out.print(" " + j);
+        }
+    }
+
+    public static void checkArrays(int[] a, int[] b) {
+        boolean areEqual = true;
+
+        if (a.length != b.length) {
+            areEqual = false;
+        } else {
+            for (int i = 0; i < a.length; i++) {
+                if (a[i] != b[i]) {
+                    areEqual = false;
+                    break;
+                }
+            }
+        }
+
+        if (areEqual) {
+            System.out.println("The arrays are equal.");
+        } else {
+            System.out.println("The arrays are not equal.");
+        }
+    }
+
+    public static int randomizedPartition(int[] a, int low, int high) {
+        Random rand = new Random();
+        int i = rand.nextInt(high - low) + low;
+        swap(a, i, high);
+        return partition(a, low, high);
+    }
 }
